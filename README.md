@@ -1,4 +1,4 @@
-# [Vue Soft UI Dashboard](http://demos.creative-tim.com/vue-soft-ui-dashboard/?ref=readme-vsud) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/intent/tweet?url=https://www.creative-tim.com/product/vue-soft-ui-dashboard&text=Check%20Vue%20Soft%20UI%20Dashboard%20made%20by%20@CreativeTim%20#webdesign%20#dashboard%20#softdesign%20#vue%20https://www.creative-tim.com/product/vue-soft-ui-dashboard)
+# [Vue The Flying Bookstore dashboard](http://demos.creative-tim.com/vue-soft-ui-dashboard/?ref=readme-vsud) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/intent/tweet?url=https://www.creative-tim.com/product/vue-soft-ui-dashboard&text=Check%20Vue%20Soft%20UI%20Dashboard%20made%20by%20@CreativeTim%20#webdesign%20#dashboard%20#softdesign%20#vue%20https://www.creative-tim.com/product/vue-soft-ui-dashboard)
 
 ![version](https://img.shields.io/badge/version-3.0.0-blue.svg) [![GitHub issues open](https://img.shields.io/github/issues/creativetimofficial/vue-soft-ui-dashboard.svg)](https://github.com/creativetimofficial/vue-soft-ui-dashboard/issues?q=is%3Aopen+is%3Aissue) [![GitHub issues closed](https://img.shields.io/github/issues-closed-raw/creativetimofficial/vue-soft-ui-dashboard.svg)](https://github.com/creativetimofficial/vue-soft-ui-dashboard/issues?q=is%3Aissue+is%3Aclosed)
 
@@ -8,7 +8,7 @@ Start your Development with an Innovative Admin Template for Bootstrap 5 and Vue
 
 **Fully Coded Components**
 
-Vue Soft UI Dashboard is built with over 70 frontend individual elements, like buttons, inputs, navbars, nav tabs, cards, or alerts, giving you the freedom of choosing and combining. All components can take variations in color, which you can easily modify using SASS files and classes. You will save a lot of time going from prototyping to full-functional code because all elements are implemented.
+Vue The Flying Bookstore dashboard is built with over 70 frontend individual elements, like buttons, inputs, navbars, nav tabs, cards, or alerts, giving you the freedom of choosing and combining. All components can take variations in color, which you can easily modify using SASS files and classes. You will save a lot of time going from prototyping to full-functional code because all elements are implemented.
 
 This Free Bootstrap 5 & VueJS 3 Dashboard is coming with prebuilt design blocks, so the development process is seamless,
 switching from our pages to the real website is very easy to be done.
@@ -22,7 +22,7 @@ You can read more about the [documentation here](https://www.creative-tim.com/le
 
 **Example Pages**
 
-If you want to get inspiration or just show something directly to your clients, you can jump-start your development with our pre-built example pages. Every page is spaced well, with attractive layouts and pleasing shapes. From specially designed dashboards for smart homes, virtual reality, and automotives to CRM admins, Vue Soft UI Dashboard has everything you need to quickly set up an amazing project.
+If you want to get inspiration or just show something directly to your clients, you can jump-start your development with our pre-built example pages. Every page is spaced well, with attractive layouts and pleasing shapes. From specially designed dashboards for smart homes, virtual reality, and automotives to CRM admins, Vue The Flying Bookstore dashboard has everything you need to quickly set up an amazing project.
 
 View [example pages here](https://demos.creative-tim.com/vue-soft-ui-dashboard/).
 
@@ -36,7 +36,7 @@ View [example pages here](https://demos.creative-tim.com/vue-soft-ui-dashboard/)
 During the development of this dashboard, we have used many existing resources from awesome developers. We want to thank them for providing their tools open source:
 
 - [Popper.js](https://popper.js.org/) - Kickass library used to manage poppers
-- [Nepcha Analytics](https://nepcha.com?ref=readme) for the analytics tool. Nepcha is already integrated with Vue Soft UI Dashboard. You can use it to gain insights into your sources of traffic.
+- [Nepcha Analytics](https://nepcha.com?ref=readme) for the analytics tool. Nepcha is already integrated with Vue The Flying Bookstore dashboard. You can use it to gain insights into your sources of traffic.
 
 Let us know your thoughts below. And good luck with development!
 
@@ -61,7 +61,7 @@ Let us know your thoughts below. And good luck with development!
 | VueJS |
 | ----- |
 
-| [![Vue Soft UI Dashboard](https://s3.amazonaws.com/creativetim_bucket/products/591/thumb/vue-soft-ui-dashboard.jpg)](http://demos.creative-tim.com/vue-soft-ui-dashboard/?ref=readme-vsud)
+| [![Vue The Flying Bookstore dashboard](https://s3.amazonaws.com/creativetim_bucket/products/591/thumb/vue-soft-ui-dashboard.jpg)](http://demos.creative-tim.com/vue-soft-ui-dashboard/?ref=readme-vsud)
 
 ## Demo
 
@@ -84,7 +84,7 @@ Quick start options:
 
 ## Documentation
 
-The documentation for the Soft UI Dashboard is hosted at our [website](https://www.creative-tim.com/learning-lab/vue/overview/soft-ui-dashboard/?ref=readme-vsud).
+The documentation for the The Flying Bookstore dashboard is hosted at our [website](https://www.creative-tim.com/learning-lab/vue/overview/soft-ui-dashboard/?ref=readme-vsud).
 
 ### What's included
 
@@ -170,9 +170,9 @@ At present, we officially aim to support the last two versions of the following 
 
 ## Reporting Issues
 
-We use GitHub Issues as the official bug tracker for the Soft UI Dashboard PRO React. Here are some advices for our users that want to report an issue:
+We use GitHub Issues as the official bug tracker for the The Flying Bookstore dashboard PRO React. Here are some advices for our users that want to report an issue:
 
-1. Make sure that you are using the latest version of the Soft UI Dashboard PRO React. Check the CHANGELOG from your dashboard on our [website](https://www.creative-tim.com/product/vue-soft-ui-dashboard-pro?ref=readme-vsud).
+1. Make sure that you are using the latest version of the The Flying Bookstore dashboard PRO React. Check the CHANGELOG from your dashboard on our [website](https://www.creative-tim.com/product/vue-soft-ui-dashboard-pro?ref=readme-vsud).
 2. Providing us reproducible steps for the issue will shorten the time it takes for it to be fixed.
 3. Some issues may be browser specific, so specifying in what browser you encountered the issue might help.
 

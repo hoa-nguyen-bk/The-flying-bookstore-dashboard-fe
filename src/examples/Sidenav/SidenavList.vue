@@ -110,7 +110,7 @@ export default {
   },
   data() {
     return {
-      title: "Soft UI Dashboard PRO",
+      title: "The Flying Bookstore dashboard PRO",
       controls: "dashboardsExamples",
       isActive: "active",
     };
