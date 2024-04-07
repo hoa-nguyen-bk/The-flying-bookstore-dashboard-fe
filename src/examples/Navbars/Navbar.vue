@@ -43,7 +43,7 @@
               <span v-if="this.$store.state.isRTL" class="d-sm-inline d-none"
                 >يسجل دخول</span
               >
-              <span v-else class="d-sm-inline d-none">Sign In </span>
+              <span v-else class="d-sm-inline d-none">Hi Hòa </span>
             </router-link>
           </li>
           <li class="nav-item d-xl-none ps-3 d-flex align-items-center">

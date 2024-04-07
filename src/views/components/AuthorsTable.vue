@@ -60,7 +60,7 @@
       </div>
     </div>
     <!-- Pagination -->
-    <div class="d-flex justify-content-center mt-3">
+    <div class="d-flex justify-content-end my-3">
       <a-pagination v-model="currentPage" :total="totalItems" :show-less-items="true" :show-quick-jumper="true" :show-size-changer="false" @change="handlePageChange" />
     </div>
   </div>
@@ -79,7 +79,7 @@ export default {
     return {
       listings: [],
       currentPage: 1,
-      itemsPerPage: 5
+      itemsPerPage: 10
     };
   },
   computed: {
