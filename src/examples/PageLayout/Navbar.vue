@@ -30,30 +30,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navigation">
         <ul class="navbar-nav mx-auto">
-          <li class="nav-item">
-            <router-link
-              class="nav-link d-flex align-items-center me-2 active"
-              aria-current="page"
-              to="/dashboard"
-            >
-              <i
-                class="fa fa-chart-pie opacity-6 me-1"
-                aria-hidden="true"
-                :class="isBlur ? 'text-dark' : 'text-white'"
-              ></i>
-              Dashboard
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link me-2" to="/profile">
-              <i
-                class="fa fa-user opacity-6 me-1"
-                aria-hidden="true"
-                :class="isBlur ? 'text-dark' : 'text-white'"
-              ></i>
-              Profile
-            </router-link>
-          </li>
+         
           <li class="nav-item">
             <router-link class="nav-link me-2" to="/sign-up">
               <i
