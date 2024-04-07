@@ -32,7 +32,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(listing, index) in listings" :key="index">
+            <tr v-for="(listing, index) in paginatedListings" :key="index">
               <td  class="align-middle text-center">
                 <p class="text-xs font-weight-bold mb-0">{{ listing.id }}</p>
               </td>
@@ -52,27 +52,45 @@
                 <p class="text-xs font-weight-bold mb-0">{{ listing.penaltyRate }}</p>
               </td>
               <td  class="align-middle text-center">
-                <p class="text-xs font-weight-bold mb-0">{{ listing.description }}</p>
+                <p class="text-xs font-weight-bold mb-0">{{ listing.description }}...</p>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
+    <!-- Pagination -->
+    <div class="d-flex justify-content-center mt-3">
+      <a-pagination v-model="currentPage" :total="totalItems" :show-less-items="true" :show-quick-jumper="true" :show-size-changer="false" @change="handlePageChange" />
+    </div>
   </div>
 </template>
 
 <script>
+import { Pagination as AntPagination } from 'ant-design-vue';
 import axios from 'axios';
 
 export default {
-  name: "authors-table",
+  name: "listing-table",
+  components: {
+    'a-pagination': AntPagination
+  },
   data() {
     return {
-      listings: []
+      listings: [],
+      currentPage: 1,
+      itemsPerPage: 5
     };
   },
-  components: {
+  computed: {
+    paginatedListings() {
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
+      return this.listings.slice(startIndex, endIndex);
+    },
+    totalItems() {
+      return this.listings.length;
+    }
   },
   mounted() {
     this.fetchListings();
@@ -85,7 +103,6 @@ export default {
             id: listing.id,
             quantity: listing.quantity,
             address: listing.address,
-            expiryDate: listing.expiryDate,
             leaseRate: listing.leaseRate,
             depositFee: listing.depositFee,
             penaltyRate: listing.penaltyRate,
@@ -95,6 +112,9 @@ export default {
         .catch(error => {
           console.error('Error fetching listings:', error);
         });
+    },
+    handlePageChange(newPage) {
+      this.currentPage = newPage;
     }
   }
 };
