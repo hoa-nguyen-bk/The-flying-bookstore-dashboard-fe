@@ -11,7 +11,7 @@
         v-bind="$attrs"
         :class="isBlur ? 'text-dark' : 'text-white'"
       >
-        The Flying Bookstore dashboard
+        The Flying Bookstore
       </router-link>
       <button
         class="navbar-toggler shadow-none ms-2"
