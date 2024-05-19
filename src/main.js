@@ -18,6 +18,7 @@ import App from "./App.vue";
 import store from "./store";
 import router from "./router";
 import Antd from 'ant-design-vue';
+import dayjs from 'dayjs'
 import { Button } from 'ant-design-vue';
 import 'ant-design-vue/dist/reset.css';
 import "./assets/css/nucleo-icons.css";
@@ -27,6 +28,7 @@ import SoftUIDashboard from "./soft-ui-dashboard";
 const appInstance = createApp(App);
 appInstance.use(store);
 appInstance.use(router);
+appInstance.config.globalProperties.$dayjs = dayjs
 appInstance.use(Button);
 appInstance.use(Antd);
 appInstance.use(SoftUIDashboard);

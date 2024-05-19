@@ -16,22 +16,22 @@
               <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                Tên sách
+                Tiêu đề
               </th>
               <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                Tên người thuê
+                Chủ sách
               </th>
               <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                Tên người cho thuê
+                Người thuê
               </th>
               <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                Thời gian thuê
+                Khoảng thời gian
               </th>
               <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
@@ -104,7 +104,7 @@
               <td class="align-middle text-center">
                 <a-dropdown>
                   <a class="ant-dropdown-link" @click.prevent>
-                    {{ listStatus[listing.status] }}
+                    {{ listing.status }}
                     <a-icon />
                   </a>
                   <template #overlay>
@@ -127,7 +127,7 @@
         v-model="currentPage"
         :total="totalItems"
         :show-less-items="true"
-        :show-quick-jumper="true"
+        :show-quick-jumper="false"
         :show-size-changer="false"
         @change="handlePageChange"
       />
@@ -143,6 +143,7 @@ import {
 } from "ant-design-vue";
 import { DownOutlined } from "@ant-design/icons-vue";
 import axios from "axios";
+import dayjs from "dayjs";
 
 export default {
   name: "listing-table",
@@ -155,22 +156,27 @@ export default {
   },
   data() {
     return {
-      userId: 1000,
+      userId: 1,
       listings: [],
       currentPage: 1,
       itemsPerPage: 10,
       listStatus: {
-        ORDERED_PAYMENT_PENDING: "Chờ người thuê thanh toán",
-        CANCELED: "Người thuê đã hủy",
-        PAYMENT_SUCCESS: "Người thuê thanh toán thành công",
-        DELIVERED: "Người cho thuê đã giao sách",
-        LATE_RETURN: "Người thuê trả trễ",
-        RETURNING: "Người thuê đã trả",
-        RETURNED: "Người cho thuê đã nhận lại sách",
-        DEPOSIT_RETURNED: "Đã trả tiền cọc lại cho người thuê",
-        USER_PAID: "Chờ xác nhận thanh toán",
-        PAID_OWNER: "Đã trả tiền thuê lại cho người cho thuê",
+        ORDERED_PAYMENT_PENDING: "1. Chờ người thuê thanh toán",
+        USER_PAID: "2. Admin xác nhận thanh toán",
+        PAYMENT_SUCCESS: "3. Đã thanh toán",
+        DELIVERED: "4. Người cho thuê đã giao sách",
+        RETURNING: "5. Người thuê đã trả",
+        RETURNED: "6. Người cho thuê đã nhận lại sách",
+        DEPOSIT_RETURNED: "7. Đã trả tiền cọc lại cho người thuê",
+        PAID_OWNER: "8. Đã trả tiền thuê lại cho người cho thuê",
+        CANCELED: "9. Người thuê đã hủy",
+        LATE_RETURN: "10. Người thuê trả trễ",
       },
+      listPaymentMethod: {
+        COD: "COD",
+        BANK_TRANSFER: "Chuyển khoản",
+        VNPAY: "VNPAY"
+      }
     };
   },
   computed: {
@@ -187,6 +193,16 @@ export default {
     this.fetchListings();
   },
   methods: {
+    formatCurrency(amount) {
+      if (!amount) return 0;
+      // Chuyển số tiền thành chuỗi và thêm dấu chấm phẩy giữa các hàng nghìn
+      const formattedAmount = amount
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  
+      // Thêm ký tự đơn vị tiền tệ (VND)
+      return formattedAmount + "đ";
+    },
     async fetchListings() {
       return await axios
         .get(`http://localhost:8082/api/leaseOrder/search/lessee/${this.userId}`)
@@ -198,12 +214,12 @@ export default {
               title: listing.book.title,
               leeseName: `${lessee.firstName} ${lessee.lastName}`,
               leesorName: `${lessor.firstName} ${lessor.lastName}`,
-              duration: `${leaseOrder.fromDate} - ${leaseOrder.toDate} `,
-              method: leaseOrder.paymentMethod,
-              depositFee: leaseOrder.totalDeposit,
-              leaseFee: leaseOrder.totalLeaseFee,
-              total: leaseOrder.totalDeposit,
-              status: leaseOrder.status,
+              duration: `${dayjs(leaseOrder.fromDate).format("DD/MM")} - ${dayjs(leaseOrder.toDate).format("DD/MM/YYYY")}`,
+              method: this.listPaymentMethod[leaseOrder.paymentMethod],
+              depositFee: this.formatCurrency(leaseOrder.totalDeposit),
+              leaseFee: this.formatCurrency(leaseOrder.totalLeaseFee),
+              total: this.formatCurrency(leaseOrder.totalDeposit),
+              status: this.listStatus[leaseOrder.status],
             };
           });
         })

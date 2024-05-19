@@ -19,9 +19,9 @@
               <div class="mt-8 card card-plain">
                 <div class="pb-0 card-header text-start">
                   <h3 class="font-weight-bolder text-success text-gradient">
-                    Welcome back
+                    Chào mừng bạn đã quay lại!
                   </h3>
-                  <p class="mb-0">Enter your email and password to sign in</p>
+                  <p class="mb-0">Đăng nhập</p>
                 </div>
                 <div class="card-body">
                   <form role="form" class="text-start">
@@ -32,15 +32,15 @@
                       placeholder="Email"
                       name="email"
                     />
-                    <label>Password</label>
+                    <label>Mật khẩu</label>
                     <soft-input
                       id="password"
                       type="password"
-                      placeholder="Password"
+                      placeholder="Mật khẩu"
                       name="password"
                     />
                     <soft-switch id="rememberMe" name="rememberMe" checked>
-                      Remember me
+                      Nhớ tài khoản đăng nhập
                     </soft-switch>
                     <div class="text-center">
                       <soft-button
@@ -48,18 +48,18 @@
                         variant="gradient"
                         color="success"
                         full-width
-                        >Sign in
+                        >Đăng nhập
                       </soft-button>
                     </div>
                   </form>
                 </div>
                 <div class="px-1 pt-0 text-center card-footer px-lg-2">
                   <p class="mx-auto mb-4 text-sm">
-                    Don't have an account?
+                    Không có tài khoản?
                     <router-link
                       :to="{ name: 'Sign Up' }"
                       class="text-success text-gradient font-weight-bold"
-                      >Sign up</router-link
+                      >Đăng ký</router-link
                     >
                   </p>
                 </div>

@@ -4,15 +4,9 @@
     id="sidenav-collapse-main"
   >
     <ul class="navbar-nav">
+
       <li class="nav-item">
-        <sidenav-collapse navText="Dashboard" :to="{ name: 'Dashboard' }">
-          <template #icon>
-            <shop />
-          </template>
-        </sidenav-collapse>
-      </li>
-      <li class="nav-item">
-        <sidenav-collapse navText="Listing Managerment" :to="{ name: 'Tables' }">
+        <sidenav-collapse navText="Quản lý đơn hàng" :to="{ name: 'Tables' }">
           <template #icon>
             <office />
           </template>
@@ -24,25 +18,18 @@
           class="text-xs ps-4 text-uppercase font-weight-bolder opacity-6"
           :class="this.$store.state.isRTL ? 'me-4' : 'ms-2'"
         >
-          PAGES
+          Tài khoản
         </h6>
       </li>
       <li class="nav-item">
-        <sidenav-collapse navText="Profile" :to="{ name: 'Profile' }">
-          <template #icon>
-            <customer-support />
-          </template>
-        </sidenav-collapse>
-      </li>
-      <li class="nav-item">
-        <sidenav-collapse navText="Sign In" :to="{ name: 'Sign In' }">
+        <sidenav-collapse navText="Đăng nhập" :to="{ name: 'Sign In' }">
           <template #icon>
             <document />
           </template>
         </sidenav-collapse>
       </li>
       <li class="nav-item">
-        <sidenav-collapse navText="Sign Up" :to="{ name: 'Sign Up' }">
+        <sidenav-collapse navText="Đăng ký" :to="{ name: 'Sign Up' }">
           <template #icon>
             <spaceship />
           </template>
@@ -54,9 +41,7 @@
 </template>
 <script>
 import SidenavCollapse from "./SidenavCollapse.vue";
-import Shop from "../../components/Icon/Shop.vue";
 import Office from "../../components/Icon/Office.vue";
-import CustomerSupport from "../../components/Icon/CustomerSupport.vue";
 import Document from "../../components/Icon/Document.vue";
 import Spaceship from "../../components/Icon/Spaceship.vue";
 
@@ -74,9 +59,7 @@ export default {
   },
   components: {
     SidenavCollapse,
-    Shop,
     Office,
-    CustomerSupport,
     Document,
     Spaceship,
   },

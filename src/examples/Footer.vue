@@ -8,9 +8,8 @@
             :class="this.$store.state.isRTL ? 'text-lg-end' : 'text-lg-start'"
           >
             ©
-            {{ new Date().getFullYear() }}, made with
-            <i class="fa fa-heart"></i> by
-            The Flying Bookstore.
+            {{ new Date().getFullYear() }}, Bản quyền thuộc về
+            đội ngũ The Flying Bookstore.
           </div>
         </div>
         <div class="col-lg-6">

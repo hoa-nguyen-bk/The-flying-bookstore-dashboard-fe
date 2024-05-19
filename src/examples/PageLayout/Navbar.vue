@@ -7,7 +7,7 @@
     <div class="container">
       <router-link
         class="navbar-brand font-weight-bolder ms-lg-0 ms-3"
-        to="/dashboard"
+        to="/tables"
         v-bind="$attrs"
         :class="isBlur ? 'text-dark' : 'text-white'"
       >
@@ -38,7 +38,7 @@
                 aria-hidden="true"
                 :class="isBlur ? 'text-dark' : 'text-white'"
               ></i>
-              Sign Up
+              Đăng ký
             </router-link>
           </li>
           <li class="nav-item">
@@ -48,7 +48,7 @@
                 aria-hidden="true"
                 :class="isBlur ? 'text-dark' : 'text-white'"
               ></i>
-              Sign In
+              Đăng nhập
             </router-link>
           </li>
         </ul>

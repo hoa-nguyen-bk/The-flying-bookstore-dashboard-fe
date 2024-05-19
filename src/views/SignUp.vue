@@ -11,7 +11,7 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="mx-auto text-center col-lg-5">
-          <h1 class="mt-5 mb-2 text-white">Welcome!</h1>
+          <h1 class="mt-5 mb-2 text-white">Chào mừng bạn!</h1>
           
         </div>
       </div>
@@ -22,7 +22,7 @@
       <div class="mx-auto col-xl-4 col-lg-5 col-md-7">
         <div class="card z-index-0">
           <div class="pt-4 text-center card-header">
-            <h5>Register</h5>
+            <h5>Đăng ký</h5>
           </div>
           <div class="card-body">
             <form role="form">
@@ -30,7 +30,7 @@
                 <soft-input
                   id="name"
                   type="text"
-                  placeholder="Name"
+                  placeholder="Tên đăng nhập"
                   aria-label="Name"
                 />
               </div>
@@ -46,7 +46,15 @@
                 <soft-input
                   id="password"
                   type="password"
-                  placeholder="Password"
+                  placeholder="Mật khẩu"
+                  aria-label="Password"
+                />
+              </div>
+              <div class="mb-3">
+                <soft-input
+                  id="password"
+                  type="password"
+                  placeholder="Xác nhận mật khẩu"
                   aria-label="Password"
                 />
               </div>
@@ -56,9 +64,9 @@
                 class="font-weight-light"
                 checked
               >
-                I agree the
+                Tôi đồng ý với
                 <a href="javascript:;" class="text-dark font-weight-bolder"
-                  >Terms and Conditions</a
+                  >Điều khoản và Điều kiện</a
                 >
               </soft-checkbox>
 
@@ -68,16 +76,16 @@
                   full-width
                   variant="gradient"
                   class="my-4 mb-2"
-                  >Sign up</soft-button
+                  >Đăng ký</soft-button
                 >
               </div>
               <p class="text-sm mt-3 mb-0">
-                Already have an account?
+                Đã có tài khoản rồi?
                 <router-link
                   :to="{ name: 'Sign In' }"
                   class="text-dark font-weight-bolder"
                 >
-                  Sign in
+                  Đăng nhập
                 </router-link>
               </p>
             </form>
