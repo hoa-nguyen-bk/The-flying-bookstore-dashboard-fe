@@ -51,7 +51,7 @@
               <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                Tổng tiền
+                Tiền cần trả
               </th>
               <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
@@ -99,23 +99,20 @@
                 </p>
               </td>
               <td class="align-middle text-center">
-                <p class="text-xs font-weight-bold mb-0">{{ listing.total }}</p>
+                <p class="text-xs font-weight-bold mb-0">
+                  {{ listing.returnFee }}
+                </p>
               </td>
               <td class="align-middle text-center">
-                <a-dropdown>
-                  <a class="ant-dropdown-link" @click.prevent>
-                    {{ listing.status }}
-                    <a-icon />
-                  </a>
-                  <template #overlay>
-                    <a-menu>
-                      <a-menu-item  v-for="(value,key,index) in listStatus" :key="index"  @click="handleMenuClick(listing.id,key)">
-                        <a href="javascript:;" >{{ value }}</a>
-                      </a-menu-item>
-                    </a-menu>
-                  </template>
-                </a-dropdown>
+                <p class="text-xs font-weight-bold mb-0">
+                  {{ listing.status  }}  </p>
+                <a-button class="mt-2" v-if="listing.status == listStatus[`USER_PAID`]" @click="handleMenuClick(listing.id,`PAYMENT_SUCCESS`)">User đã trả tiền</a-button> 
+                <a-button class="mt-2" v-else-if="listing.status == listStatus[`RETURNED`]" @click="handleMenuClick(listing.id,`DEPOSIT_RETURNED`)">
+                  Đã trả cọc cho người thuê
+                </a-button> 
+                <a-button class="mt-2" v-else-if="listing.status == listStatus[`DEPOSIT_RETURNED`]" @click="handleMenuClick(listing.id,`PAID_OWNER`)">Đã trả cọc cho chủ sách</a-button>
               </td>
+              
             </tr>
           </tbody>
         </table>
@@ -138,10 +135,8 @@
 <script>
 import {
   Pagination as AntPagination,
-  Dropdown,
-  Menu,MenuItem,
+  Button
 } from "ant-design-vue";
-import { DownOutlined } from "@ant-design/icons-vue";
 import axios from "axios";
 import dayjs from "dayjs";
 
@@ -149,10 +144,7 @@ export default {
   name: "listing-table",
   components: {
     "a-pagination": AntPagination,
-    "a-icon": DownOutlined,
-    "a-dropdown": Dropdown,
-    "a-menu": Menu,
-    "a-menu-item": MenuItem,
+    "a-button": Button
   },
   data() {
     return {
@@ -220,6 +212,7 @@ export default {
               leaseFee: this.formatCurrency(leaseOrder.totalLeaseFee),
               total: this.formatCurrency(leaseOrder.totalDeposit),
               status: this.listStatus[leaseOrder.status],
+              returnFee: leaseOrder.totalDeposit - leaseOrder.totalLeaseFee,
             };
           });
         })
