@@ -24,7 +24,7 @@
                   <p class="mb-0">Đăng nhập</p>
                 </div>
                 <div class="card-body">
-                  <form role="form" class="text-start">
+                  <div class="text-start">
                     <label>Email</label>
                     <soft-input
                       id="email"
@@ -48,10 +48,11 @@
                         variant="gradient"
                         color="success"
                         full-width
+                        @click="login"
                         >Đăng nhập
                       </soft-button>
                     </div>
-                  </form>
+                  </div>
                 </div>
                 <div class="px-1 pt-0 text-center card-footer px-lg-2">
                   <p class="mx-auto mb-4 text-sm">
@@ -96,6 +97,9 @@ import SoftSwitch from "@/components/SoftSwitch.vue";
 import SoftButton from "@/components/SoftButton.vue";
 const body = document.getElementsByTagName("body")[0];
 import { mapMutations } from "vuex";
+import axios from "axios";
+import { message } from 'ant-design-vue';
+
 
 export default {
   name: "SignIn",
@@ -118,6 +122,31 @@ export default {
   },
   methods: {
     ...mapMutations(["toggleEveryDisplay", "toggleHideConfig"]),
+    async login() {
+      try {
+        const response = await axios.post(
+          "http://localhost:8082/api/user/login",
+          {
+            "loginName": "admin",
+            "password": "123456"
+          },
+        );
+        console.log({response});
+        this.success();
+        this.$router.push('/tables');
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    success : () => {
+      message.success({
+        content: () => 'Đăng nhập thành công',
+        class: 'custom-class',
+        style: {
+          marginTop: '15vh',
+        },
+      });
+    }
   },
 };
 </script>

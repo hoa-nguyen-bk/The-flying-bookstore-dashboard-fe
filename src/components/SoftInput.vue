@@ -9,10 +9,11 @@
         :type="type"
         class="form-control"
         :class="getClasses(size, success, error)"
-        :name="name"
+        :name="id"
         :value="value"
         :placeholder="placeholder"
         :isRequired="isRequired"
+        :v-model="id"
       />
       <span v-if="iconDir === 'right'" class="input-group-text">
         <i :class="getIcon(icon)"></i>

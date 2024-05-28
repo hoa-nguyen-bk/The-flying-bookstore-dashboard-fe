@@ -51,7 +51,7 @@
               <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                Tiền cần trả
+                Tiền trả cho khách
               </th>
               <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
@@ -105,8 +105,10 @@
               </td>
               <td class="align-middle text-center">
                 <p class="text-xs font-weight-bold mb-0">
-                  {{ listing.status  }}  </p>
-                <a-button class="mt-2" v-if="listing.status == listStatus[`USER_PAID`]" @click="handleMenuClick(listing.id,`PAYMENT_SUCCESS`)">User đã trả tiền</a-button> 
+                  {{ listing.status  }}  {{  listing.lateFee }}
+                </p>
+                <a-button class="mt-2" v-if="listing.status == listStatus[`ORDERED_PAYMENT_PENDING`]" @click="handleMenuClick(listing.id,`PAYMENT_SUCCESS`)">Người thuê đã trả tiền</a-button> 
+                <a-button class="mt-2" v-else-if="listing.status == listStatus[`USER_PAID`]" @click="handleMenuClick(listing.id,`PAYMENT_SUCCESS`)">Người thuê đã trả tiền</a-button> 
                 <a-button class="mt-2" v-else-if="listing.status == listStatus[`RETURNED`]" @click="handleMenuClick(listing.id,`DEPOSIT_RETURNED`)">
                   Đã trả cọc cho người thuê
                 </a-button> 
@@ -197,10 +199,10 @@ export default {
     },
     async fetchListings() {
       return await axios
-        .get(`http://localhost:8082/api/leaseOrder/search/lessee/${this.userId}`)
+        .get(`http://localhost:8082/api/leaseOrder/admin`)
         .then((response) => {
-          this.listings = response.data.map((item) => {
-            const { lessee, listing, leaseOrder, lessor } = item;
+          this.listings = response?.data?.content.map((item) => {
+            const { lessee, listing, leaseOrder, lessor,totalPenaltyFee } = item;
             return {
               id: leaseOrder.id,
               title: listing.book.title,
@@ -212,7 +214,8 @@ export default {
               leaseFee: this.formatCurrency(leaseOrder.totalLeaseFee),
               total: this.formatCurrency(leaseOrder.totalDeposit),
               status: this.listStatus[leaseOrder.status],
-              returnFee: leaseOrder.totalDeposit - leaseOrder.totalLeaseFee,
+              returnFee: this.formatCurrency(leaseOrder.totalDeposit - leaseOrder.totalLeaseFee),
+              lateFee: totalPenaltyFee != 0? ", phí phạt là " + this.formatCurrency(totalPenaltyFee) :"",
             };
           });
         })

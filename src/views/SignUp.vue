@@ -12,7 +12,6 @@
       <div class="row justify-content-center">
         <div class="mx-auto text-center col-lg-5">
           <h1 class="mt-5 mb-2 text-white">Chào mừng bạn!</h1>
-          
         </div>
       </div>
     </div>
@@ -25,13 +24,12 @@
             <h5>Đăng ký</h5>
           </div>
           <div class="card-body">
-            <form role="form">
+            <form id="signUp" novalidate @submit.prevent="onSubmit">
               <div class="mb-3">
                 <soft-input
-                  id="name"
+                  id="username"
                   type="text"
                   placeholder="Tên đăng nhập"
-                  aria-label="Name"
                 />
               </div>
               <div class="mb-3">
@@ -39,7 +37,6 @@
                   id="email"
                   type="email"
                   placeholder="Email"
-                  aria-label="Email"
                 />
               </div>
               <div class="mb-3">
@@ -47,15 +44,13 @@
                   id="password"
                   type="password"
                   placeholder="Mật khẩu"
-                  aria-label="Password"
                 />
               </div>
               <div class="mb-3">
                 <soft-input
-                  id="password"
+                  id="repear-password"
                   type="password"
                   placeholder="Xác nhận mật khẩu"
-                  aria-label="Password"
                 />
               </div>
               <soft-checkbox
@@ -103,11 +98,20 @@ import AppFooter from "@/examples/PageLayout/Footer.vue";
 import SoftInput from "@/components/SoftInput.vue";
 import SoftCheckbox from "@/components/SoftCheckbox.vue";
 import SoftButton from "@/components/SoftButton.vue";
-
+import axios from "axios";
+import { message } from "ant-design-vue";
 import { mapMutations } from "vuex";
 
 export default {
   name: "SignupBasic",
+  data() {
+    return {
+      errors: [],
+      username: null,
+      password: null,
+      email: null,
+    };
+  },
   components: {
     Navbar,
     AppFooter,
@@ -123,8 +127,51 @@ export default {
     this.toggleEveryDisplay();
     this.toggleHideConfig();
   },
+
   methods: {
     ...mapMutations(["toggleEveryDisplay", "toggleHideConfig"]),
+    onSubmit() {
+      console.log({
+        username: this.username,
+        password: this.password,
+        email: this.email,
+      });
+      if (this.name && this.password) return true;
+      this.errors = [];
+      if (!this.name) this.errors.push("Name required.");
+      if (!this.password) this.errors.push("password required.");
+      this.signUp()
+    },
+    async signUp() {
+      try {
+        const response = await axios.post(
+          "http://localhost:8082/api/user/register",
+          {
+            username: "thaoAdmin" + Math.random() * 100,
+            password: "1XyseXWk",
+            email: "",
+            firstName: "",
+            lastName: "",
+            phoneNumber: "",
+            birthDate: "",
+          }
+        );
+        console.log({ response });
+        this.success();
+        this.$router.push('/sign-in');
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    success: () => {
+      message.success({
+        content: () => "Đăng ký thành công",
+        class: "custom-class",
+        style: {
+          marginTop: "15vh",
+        },
+      });
+    },
   },
 };
 </script>
