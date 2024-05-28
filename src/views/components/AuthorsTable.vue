@@ -226,9 +226,18 @@ export default {
     handlePageChange(newPage) {
       this.currentPage = newPage;
     },
-    async handleMenuClick (id,value) {
-      console.log({value,id});
-      return await axios.request({ url: `http://localhost:8082/api/leaseOrder/edit/status?status=${value}&id=${id}`})
+    async handleMenuClick (id,status) {
+      const token = `eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5OTkiLCJpYXQiOjE3MTY4OTIyMzgsIm5iZiI6MTcxNjg5MjIzOCwiZXhwIjoxNzE5NDg0MjM4LCJyb2xlcyI6IkFETUlOIn0.UjfUHUgnRIN30ScRi7jSsEovtEUPYsyLihlGgLA-JRo`;
+      const config = {
+          url: `http://localhost:8082/api/leaseOrder/edit/status`,
+          params: { id, status },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      console.log({config});
+      return await axios
+        .request(config)
         .then(async (response) => {
           console.log((response.data));
           return await this.fetchListings()
