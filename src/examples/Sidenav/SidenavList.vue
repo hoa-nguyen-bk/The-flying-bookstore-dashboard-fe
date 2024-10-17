@@ -29,14 +29,7 @@
         </h6>
       </li>
       <li class="nav-item">
-        <sidenav-collapse navText="Đăng nhập" :to="{ name: 'Sign In' }">
-          <template #icon>
-            <document />
-          </template>
-        </sidenav-collapse>
-      </li>
-      <li class="nav-item">
-        <sidenav-collapse navText="Đăng ký" :to="{ name: 'Sign Up' }">
+        <sidenav-collapse navText="Đăng xuất" v-on:click="logout" :to="{ name: 'Sign In' }">
           <template #icon>
             <spaceship />
           </template>
@@ -49,7 +42,6 @@
 <script>
 import SidenavCollapse from "./SidenavCollapse.vue";
 import Office from "../../components/Icon/Office.vue";
-import Document from "../../components/Icon/Document.vue";
 import Spaceship from "../../components/Icon/Spaceship.vue";
 
 export default {
@@ -67,7 +59,6 @@ export default {
   components: {
     SidenavCollapse,
     Office,
-    Document,
     Spaceship,
   },
   methods: {
@@ -75,6 +66,9 @@ export default {
       const routeArr = this.$route.path.split("/");
       return routeArr[1];
     },
+    logout(){
+      localStorage.clear();
+    }
   },
 };
 </script>

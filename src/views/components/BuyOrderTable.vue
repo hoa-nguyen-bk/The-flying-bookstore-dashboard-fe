@@ -8,31 +8,31 @@
         <table class="table align-items-center mb-0">
           <thead>
             <tr>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center">
                 Id
               </th>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center">
                 Tiêu đề
               </th>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                Chủ sách
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center">
+                Người bán
               </th>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                Người thuê
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center">
+                Người mua
               </th>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center">
                 Ngày đặt
               </th>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center">
                 Phương thức
               </th>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center">
                 Giá bán
               </th>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center">
                 Tiền trả cho người bán
               </th>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center">
                 Trạng thái
               </th>
             </tr>
@@ -77,23 +77,10 @@
               </td>
               <td class="align-middle text-center">
                 <p class="text-xs font-weight-bold mb-0">
-                  {{ listing.returnFee }}
-                </p>
-              </td>
-              <td class="align-middle text-center">
-                <p class="text-xs font-weight-bold mb-0">
-                  {{ listing.status }} {{ listing.lateFee }}
+                  {{ listing.status }} 
                 </p>
                 <a-button class="mt-2" v-if="listing.status == listStatus[`ORDERED_PAYMENT_PENDING`]"
-                  @click="handleMenuClick(listing.id, `PAYMENT_SUCCESS`)">Người thuê đã trả tiền</a-button>
-                <a-button class="mt-2" v-else-if="listing.status == listStatus[`USER_PAID`]"
-                  @click="handleMenuClick(listing.id, `PAYMENT_SUCCESS`)">Người thuê đã trả tiền</a-button>
-                <a-button class="mt-2" v-else-if="listing.status == listStatus[`RETURNED`]"
-                  @click="handleMenuClick(listing.id, `DEPOSIT_RETURNED`)">
-                  Đã trả cọc cho người thuê
-                </a-button>
-                <a-button class="mt-2" v-else-if="listing.status == listStatus[`DEPOSIT_RETURNED`]"
-                  @click="handleMenuClick(listing.id, `PAID_OWNER`)">Đã trả cọc cho chủ sách</a-button>
+                  @click="handleMenuClick(listing.id, `PAYMENT_SUCCESS`)">Người mua đã trả tiền</a-button>
               </td>
 
             </tr>
@@ -116,6 +103,7 @@ import {
 } from "ant-design-vue";
 import axios from "axios";
 import dayjs from "dayjs";
+import {port} from "./../../store/env"
 
 export default {
   name: "buy-order-table",
@@ -130,16 +118,11 @@ export default {
       currentPage: 1,
       itemsPerPage: 10,
       listStatus: {
-        ORDERED_PAYMENT_PENDING: "1. Chờ người thuê thanh toán",
-        USER_PAID: "2. Admin xác nhận thanh toán",
-        PAYMENT_SUCCESS: "3. Đã thanh toán",
-        DELIVERED: "4. Người cho thuê đã giao sách",
-        RETURNING: "5. Người thuê đã trả",
-        RETURNED: "6. Người cho thuê đã nhận lại sách",
-        DEPOSIT_RETURNED: "7. Đã trả tiền cọc lại cho người thuê",
-        PAID_OWNER: "8. Đã trả tiền thuê lại cho người cho thuê",
-        CANCELED: "9. Người thuê đã hủy",
-        LATE_RETURN: "10. Người thuê trả trễ",
+        ORDERED_PAYMENT_PENDING: "1. Chờ người mua thanh toán",
+        PAYMENT_SUCCESS: "2. Đã thanh toán",
+        DELIVERED: "3. Người bán đã giao sách",
+        PAID_OWNER: "4. Đã trả tiền cho người bán",
+        CANCELED: "5. Người mua đã hủy",
       },
       listPaymentMethod: {
         COD: "COD",
@@ -174,23 +157,22 @@ export default {
     },
     async fetchListings() {
       return await axios
-        .get(`${process.env.VUE_PUBLIC_API_URL}/api/leaseOrder/admin`)
+        .get(`${port}/api/leaseOrder/admin`)
         .then((response) => {
           this.listings = response?.data?.content.map((item) => {
-            const { lessee, listing, leaseOrder, lessor, totalPenaltyFee } = item;
+            const { lessee, listing, leaseOrder, lessor } = item;
             return {
               id: leaseOrder.id,
               title: listing.book.title,
               leeseName: `${lessee.firstName} ${lessee.lastName}`,
               leesorName: `${lessor.firstName} ${lessor.lastName}`,
-              duration: `${dayjs(leaseOrder.fromDate).format("DD/MM")} - ${dayjs(leaseOrder.toDate).format("DD/MM/YYYY")}`,
+              duration: `${dayjs(leaseOrder.toDate).format("DD/MM/YYYY")}`,
               method: this.listPaymentMethod[leaseOrder.paymentMethod],
               depositFee: this.formatCurrency(leaseOrder.totalDeposit),
               leaseFee: this.formatCurrency(leaseOrder.totalLeaseFee),
               total: this.formatCurrency(leaseOrder.totalDeposit),
               status: this.listStatus[leaseOrder.status],
               returnFee: this.formatCurrency(leaseOrder.totalDeposit - leaseOrder.totalLeaseFee),
-              lateFee: totalPenaltyFee != 0 ? ", phí phạt là " + this.formatCurrency(totalPenaltyFee) : "",
             };
           });
         })
@@ -202,9 +184,9 @@ export default {
       this.currentPage = newPage;
     },
     async handleMenuClick(id, status) {
-      const token = `eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5OTkiLCJpYXQiOjE3MTY4OTIyMzgsIm5iZiI6MTcxNjg5MjIzOCwiZXhwIjoxNzE5NDg0MjM4LCJyb2xlcyI6IkFETUlOIn0.UjfUHUgnRIN30ScRi7jSsEovtEUPYsyLihlGgLA-JRo`;
+      const token = JSON.parse(localStorage.getItem("token"));
       const config = {
-        url: `http://localhost:8082/api/leaseOrder/edit/status`,
+        url: `${port}/api/leaseOrder/edit/status`,
         params: { id, status },
         headers: {
           Authorization: `Bearer ${token}`,

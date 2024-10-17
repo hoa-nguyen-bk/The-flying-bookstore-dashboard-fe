@@ -9,52 +9,52 @@
           <thead>
             <tr>
               <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center"
               >
                 Id
               </th>
               <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center"
               >
                 Tiêu đề
               </th>
               <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center"
               >
                 Chủ sách
               </th>
               <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center"
               >
                 Người thuê
               </th>
               <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center"
               >
                 Khoảng thời gian
               </th>
               <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center"
               >
                 Phương thức
               </th>
               <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center"
               >
                 Tiền cọc
               </th>
               <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center"
               >
                 Tiền thuê
               </th>
               <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center"
               >
                 Tiền trả cho khách
               </th>
               <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center"
               >
                 Trạng thái
               </th>
@@ -141,6 +141,7 @@ import {
 } from "ant-design-vue";
 import axios from "axios";
 import dayjs from "dayjs";
+import {port} from "./../../store/env"
 
 export default {
   name: "listing-table",
@@ -199,7 +200,7 @@ export default {
     },
     async fetchListings() {
       return await axios
-        .get(`${process.env.VUE_PUBLIC_API_URL}/api/leaseOrder/admin`)
+        .get(`${port}/api/leaseOrder/admin`)
         .then((response) => {
           this.listings = response?.data?.content.map((item) => {
             const { lessee, listing, leaseOrder, lessor,totalPenaltyFee } = item;
@@ -227,9 +228,9 @@ export default {
       this.currentPage = newPage;
     },
     async handleMenuClick (id,status) {
-      const token = `eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5OTkiLCJpYXQiOjE3MTY4OTIyMzgsIm5iZiI6MTcxNjg5MjIzOCwiZXhwIjoxNzE5NDg0MjM4LCJyb2xlcyI6IkFETUlOIn0.UjfUHUgnRIN30ScRi7jSsEovtEUPYsyLihlGgLA-JRo`;
+      const token = JSON.parse(localStorage.getItem("token"));
       const config = {
-          url: `http://localhost:8082/api/leaseOrder/edit/status`,
+          url: `${port}/api/leaseOrder/edit/status`,
           params: { id, status },
           headers: {
             Authorization: `Bearer ${token}`,

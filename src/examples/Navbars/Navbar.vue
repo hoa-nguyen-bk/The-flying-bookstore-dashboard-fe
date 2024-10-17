@@ -20,6 +20,7 @@
         <ul class="navbar-nav justify-content-end">
           <li class="nav-item d-flex align-items-center">
             <router-link
+              v-on:click="logout" 
               :to="{ name: 'Sign In' }"
               class="px-0 nav-link font-weight-bold"
               :class="textWhite ? textWhite : 'text-body'"
@@ -31,7 +32,7 @@
               <span v-if="this.$store.state.isRTL" class="d-sm-inline d-none"
                 >يسجل دخول</span
               >
-              <span v-else class="d-sm-inline d-none">Đăng xuất</span>
+              <span v-else class="d-sm-inline d-none" >Đăng xuất</span>
             </router-link>
           </li>
           <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -205,7 +206,9 @@ export default {
   methods: {
     ...mapMutations(["navbarMinimize", "toggleConfigurator"]),
     ...mapActions(["toggleSidebarColor"]),
-
+    logout(){
+      localStorage.clear();
+    },
     toggleSidebar() {
       this.toggleSidebarColor("bg-white");
       this.navbarMinimize();

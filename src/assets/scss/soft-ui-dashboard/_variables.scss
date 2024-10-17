@@ -1443,7 +1443,7 @@ $list-group-border-color:           rgba($black, .125) !default;
 $list-group-border-width:           $border-width !default;
 $list-group-border-radius:          $border-radius-md !default;
 
-$list-group-item-padding-y:         $spacer / 2 !default;
+$list-group-item-padding-y:         math.div($spacer, 2) !default;
 $list-group-item-padding-x:         $spacer !default;
 $list-group-item-bg-level:          -9 !default;
 $list-group-item-color-level:       6 !default;
@@ -1482,7 +1482,7 @@ $figure-caption-color:              $gray-600 !default;
 // Breadcrumbs
 
 $breadcrumb-font-size:              null !default;
-$breadcrumb-padding-y:              $spacer / 2 !default;
+$breadcrumb-padding-y:              math.div($spacer, 2) !default;
 $breadcrumb-padding-x:              $spacer !default;
 $breadcrumb-item-padding-x:         .5rem !default;
 $breadcrumb-margin-bottom:          1rem !default;
