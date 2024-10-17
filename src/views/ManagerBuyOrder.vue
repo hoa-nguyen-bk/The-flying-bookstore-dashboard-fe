@@ -2,19 +2,18 @@
   <div class="py-4 container-fluid">
     <div class="row">
       <div class="col-12">
-        <authors-table />
+        <buy-order-table />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import AuthorsTable from "./components/AuthorsTable";
-
+import BuyOrderTable from './components/BuyOrderTable.vue';
 export default {
-  name: "manager-rent-order",
+  name: "manager-buy-order",
   components: {
-    AuthorsTable,
+    BuyOrderTable,
   },
 };
 </script>

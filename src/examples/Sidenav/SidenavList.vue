@@ -6,7 +6,14 @@
     <ul class="navbar-nav">
 
       <li class="nav-item">
-        <sidenav-collapse navText="Quản lý đơn hàng" :to="{ name: 'Tables' }">
+        <sidenav-collapse navText="Quản lý đơn thuê" :to="{ name: 'Tables' }">
+          <template #icon>
+            <office />
+          </template>
+        </sidenav-collapse>
+      </li>
+      <li class="nav-item">
+        <sidenav-collapse navText="Quản lý đơn bán" :to="{ name: 'ManagerBuyOrder' }">
           <template #icon>
             <office />
           </template>

@@ -7,12 +7,13 @@ import Profile from "@/views/Profile.vue";
 import Rtl from "@/views/Rtl.vue";
 import SignIn from "@/views/SignIn.vue";
 import SignUp from "@/views/SignUp.vue";
+import ManagerBuyOrder from "@/views/ManagerBuyOrder.vue"
 
 const routes = [
   {
     path: "/",
     name: "/",
-    redirect: "/tables",
+    redirect: "/manager-rent-order",
   },
   {
     path: "/dashboard",
@@ -20,9 +21,14 @@ const routes = [
     component: Dashboard,
   },
   {
-    path: "/tables",
+    path: "/manager-rent-order",
     name: "Tables",
     component: Tables,
+  },
+  {
+    path: "/manager-buy-order",
+    name: "ManagerBuyOrder",
+    component: ManagerBuyOrder,
   },
   {
     path: "/billing",

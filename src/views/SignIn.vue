@@ -133,7 +133,7 @@ export default {
         );
         console.log({response});
         this.success();
-        this.$router.push('/tables');
+        this.$router.push('/manager-rent-order');
       } catch (error) {
         console.log(error);
       }

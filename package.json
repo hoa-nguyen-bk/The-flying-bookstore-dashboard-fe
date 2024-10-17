@@ -2,19 +2,10 @@
   "name": "vue-soft-ui-dashboard",
   "version": "3.0.0",
   "private": true,
-  "author": "Creative Tim",
-  "license": "SEE LICENSE IN <https://www.creative-tim.com/license>",
-  "description": "VueJS version of The Flying Bookstore dashboard PRO by Creative Tim",
-  "homepage": "https://demos.creative-tim.com/vue-soft-ui-dashboard/",
-  "bugs": {
-    "url": "https://github.com/creativetimofficial/vue-soft-ui-dashboard/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/creativetimofficial/vue-soft-ui-dashboard.git"
-  },
+  "license": "",
+  "description": "VueJS version of The Flying Bookstore dashboard PRO",
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --port 8082",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
