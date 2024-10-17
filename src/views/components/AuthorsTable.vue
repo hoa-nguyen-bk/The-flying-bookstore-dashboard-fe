@@ -199,7 +199,7 @@ export default {
     },
     async fetchListings() {
       return await axios
-        .get(`${process.env.NEXT_PUBLIC_API_URL}/api/leaseOrder/admin`)
+        .get(`${process.env.VUE_PUBLIC_API_URL}/api/leaseOrder/admin`)
         .then((response) => {
           this.listings = response?.data?.content.map((item) => {
             const { lessee, listing, leaseOrder, lessor,totalPenaltyFee } = item;
