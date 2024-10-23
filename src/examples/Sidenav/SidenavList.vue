@@ -43,6 +43,7 @@
 import SidenavCollapse from "./SidenavCollapse.vue";
 import Office from "../../components/Icon/Office.vue";
 import Spaceship from "../../components/Icon/Spaceship.vue";
+import { message } from "ant-design-vue";
 
 export default {
   name: "SidenavList",
@@ -68,6 +69,7 @@ export default {
     },
     logout(){
       localStorage.clear();
+      message.success("Đăng xuất thành công")
     }
   },
 };

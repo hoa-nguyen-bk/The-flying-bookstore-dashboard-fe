@@ -7,7 +7,7 @@
     <div class="container">
       <router-link
         class="navbar-brand font-weight-bolder ms-lg-0 ms-3"
-        to="/tables"
+        to="/manager-rent-order"
         v-bind="$attrs"
         :class="isBlur ? 'text-dark' : 'text-white'"
       >

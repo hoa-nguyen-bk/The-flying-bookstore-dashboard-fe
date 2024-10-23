@@ -191,6 +191,7 @@
 </template>
 <script>
 import { mapMutations, mapActions } from "vuex";
+import { message } from "ant-design-vue";
 
 export default {
   name: "navbar",
@@ -208,6 +209,7 @@ export default {
     ...mapActions(["toggleSidebarColor"]),
     logout(){
       localStorage.clear();
+      message.success("Đăng xuất thành công")
     },
     toggleSidebar() {
       this.toggleSidebarColor("bg-white");
