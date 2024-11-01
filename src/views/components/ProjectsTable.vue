@@ -1,7 +1,7 @@
 <template>
   <div class="card mb-4">
     <div class="card-header pb-0">
-      <h6>Quản lý voucher</h6>
+      <h6>Quản lý voucher toàn sàn</h6>
       <router-link :to="{ name: 'Create Voucher' }"><a-button class="mt-2">Tạo voucher mới</a-button></router-link>
     </div>
     <div class="card-body px-0 pt-0 pb-2">
@@ -10,6 +10,9 @@
           <thead>
             <tr>
               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                Id
+              </th>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                 Tên voucher
               </th>
               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -33,7 +36,10 @@
           <tbody>
             <tr v-for="(voucher, index) in paginatedVoucher" :key="index">
               <td>
-                <h6 class="px-3 my-auto text-sm">{{ voucher.name }}</h6>
+                <h6 class="px-3 my-auto text-xs font-weight-light">{{ voucher.id }}</h6>
+              </td>
+              <td>
+                <h6 class=" my-auto text-sm">{{ voucher.name }}</h6>
               </td>
               <td>
                 <p class="text-sm font-weight-bold mb-0">{{ voucher.code }}</p>
@@ -53,7 +59,8 @@
               </td>
               <td class="align-middle">
                 <div class="ms-auto ">
-                  <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;">
+                  <a class="btn btn-link text-danger text-gradient px-3 mb-0" @click="deleteVoucher(voucher.id)"
+                    href="javascript:;">
                     <i class="far fa-trash-alt me-2" aria-hidden="true"></i>Xóa
                   </a>
                   <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;">
@@ -78,7 +85,8 @@
 
 import {
   Pagination as AntPagination,
-  Button
+  Button,
+  message
 } from "ant-design-vue";
 import axios from "axios";
 import dayjs from "dayjs";
@@ -115,12 +123,30 @@ export default {
     handlePageChange(newPage) {
       this.currentPage = newPage;
     },
+    async deleteVoucher(voucherId) {
+      try {
+        const response = await axios.delete(`${port}/api/voucher-session/${voucherId}`, {
+          maxBodyLength: Infinity,
+        });
+        if (response.status == 204) {
+          message.success("Xóa voucher thành công");
+          return await this.fetchVouchers();
+        } else {
+          message.error("Xóa voucher không thành công");
+        }
+      } catch (error) {
+        console.error(error);
+        message.error("Xóa voucher không thành công");
+      }
+    },
+
     async fetchVouchers() {
       return await axios
         .get(`${port}/api/voucher-session`)
         .then((response) => {
           this.vouchers = response?.data?.map((item) => {
             return {
+              id:item.id,
               name: item.name,
               code: item.code,
               duration: `${dayjs(item.startDate).format("DD/MM/YYYY")} - ${dayjs(item.endDate).format("DD/MM/YYYY")}`,
