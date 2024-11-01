@@ -2,12 +2,14 @@ import { createRouter, createWebHistory } from "vue-router";
 import Dashboard from "@/views/Dashboard.vue";
 import Tables from "@/views/Tables.vue";
 import Billing from "@/views/Billing.vue";
+import CreateVoucher from "@/views/CreateVoucher.vue";
 import VirtualReality from "@/views/VirtualReality.vue";
 import Profile from "@/views/Profile.vue";
 import Rtl from "@/views/Rtl.vue";
 import SignIn from "@/views/SignIn.vue";
 import SignUp from "@/views/SignUp.vue";
 import ManagerBuyOrder from "@/views/ManagerBuyOrder.vue"
+import ManagerVoucher from "@/views/OrderManagement.vue"
 
 const routes = [
   {
@@ -31,9 +33,19 @@ const routes = [
     component: ManagerBuyOrder,
   },
   {
+    path: "/manager-voucher",
+    name: "ManagerVoucher",
+    component: ManagerVoucher,
+  },
+  {
     path: "/billing",
     name: "Billing",
     component: Billing,
+  },
+  {
+    path: "/create-voucher",
+    name: "Create Voucher",
+    component: CreateVoucher,
   },
   {
     path: "/virtual-reality",

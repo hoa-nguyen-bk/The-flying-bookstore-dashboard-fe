@@ -19,6 +19,20 @@
           </template>
         </sidenav-collapse>
       </li>
+      <li class="nav-item">
+        <sidenav-collapse navText="Quản lý voucher" :to="{ name: 'ManagerVoucher' }">
+          <template #icon>
+            <credit-card />
+          </template>
+        </sidenav-collapse>
+      </li>
+      <li class="nav-item">
+        <sidenav-collapse navText="Tạo voucher mới" :to="{ name: 'Create Voucher' }">
+          <template #icon>
+            <credit-card />
+          </template>
+        </sidenav-collapse>
+      </li>
      
       <li class="mt-3 nav-item">
         <h6
@@ -43,6 +57,7 @@
 import SidenavCollapse from "./SidenavCollapse.vue";
 import Office from "../../components/Icon/Office.vue";
 import Spaceship from "../../components/Icon/Spaceship.vue";
+import CreditCard from "../../components/Icon/CreditCard.vue";
 import { message } from "ant-design-vue";
 
 export default {
@@ -61,6 +76,7 @@ export default {
     SidenavCollapse,
     Office,
     Spaceship,
+    CreditCard,
   },
   methods: {
     getRoute() {

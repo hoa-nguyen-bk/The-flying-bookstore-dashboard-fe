@@ -114,7 +114,6 @@
                 </a-button> 
                 <a-button class="mt-2" v-else-if="listing.status == listStatus[`DEPOSIT_RETURNED`]" @click="handleMenuClick(listing.id,`PAID_OWNER`)">Đã trả cọc cho chủ sách</a-button>
               </td>
-              
             </tr>
           </tbody>
         </table>

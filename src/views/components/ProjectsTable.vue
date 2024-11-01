@@ -1,305 +1,142 @@
 <template>
   <div class="card mb-4">
     <div class="card-header pb-0">
-      <h6>Projects table</h6>
+      <h6>Quản lý voucher</h6>
+      <router-link :to="{ name: 'Create Voucher' }"><a-button class="mt-2">Tạo voucher mới</a-button></router-link>
     </div>
     <div class="card-body px-0 pt-0 pb-2">
       <div class="table-responsive p-0">
         <table class="table align-items-center justify-content-center mb-0">
           <thead>
             <tr>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
-                Project
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                Tên voucher
               </th>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
-              >
-                Budget
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                Mã code
               </th>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
-              >
-                Status
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                Loại voucher
               </th>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2"
-              >
-                Completion
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                Giá trị tối thiểu
+              </th>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                Giá trị khuyến mãi
+              </th>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                Thời gian hiệu lực
               </th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr v-for="(voucher, index) in paginatedVoucher" :key="index">
               <td>
-                <div class="d-flex px-2">
-                  <div>
-                    <img
-                      src="../../assets/img/small-logos/logo-invision.svg"
-                      class="avatar avatar-sm rounded-circle me-2"
-                      alt="spotify"
-                    />
-                  </div>
-                  <div class="my-auto">
-                    <h6 class="mb-0 text-sm">Spotify</h6>
-                  </div>
-                </div>
+                <h6 class="px-3 my-auto text-sm">{{ voucher.name }}</h6>
               </td>
               <td>
-                <p class="text-sm font-weight-bold mb-0">$2,500</p>
+                <p class="text-sm font-weight-bold mb-0">{{ voucher.code }}</p>
               </td>
               <td>
-                <span class="text-xs font-weight-bold">working</span>
+                <span class="text-xs font-weight-bold">{{ voucher.voucherTypeDescription }}</span>
               </td>
-              <td class="align-middle text-center">
-                <div class="d-flex align-items-center justify-content-center">
-                  <span class="me-2 text-xs font-weight-bold">60%</span>
-                  <div>
-                    <soft-progress
-                      color="info"
-                      variant="gradient"
-                      :percentage="60"
-                    />
-                  </div>
-                </div>
+              <td>
+                <span class=" text-xs font-weight-bold">{{ voucher.minValue }}</span>
+              </td>
+              <td>
+                <span class=" text-xs font-weight-bold">{{ voucher.voucherType == 1 ? voucher.discountPercentage :
+                  voucher.discountAmount }}</span>
+              </td>
+              <td>
+                <p class="text-xs mb-0 font-weight-semibold">{{ voucher.duration }}</p>
               </td>
               <td class="align-middle">
-                <button class="btn btn-link text-secondary mb-0">
-                  <i class="fa fa-ellipsis-v text-xs" aria-hidden="true"></i>
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="d-flex px-2">
-                  <div>
-                    <img
-                      src="../../assets/img/small-logos/logo-invision.svg"
-                      class="avatar avatar-sm rounded-circle me-2"
-                      alt="invision"
-                    />
-                  </div>
-                  <div class="my-auto">
-                    <h6 class="mb-0 text-sm">Invision</h6>
-                  </div>
+                <div class="ms-auto ">
+                  <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;">
+                    <i class="far fa-trash-alt me-2" aria-hidden="true"></i>Xóa
+                  </a>
+                  <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;">
+                    <i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Sửa
+                  </a>
                 </div>
-              </td>
-              <td>
-                <p class="text-sm font-weight-bold mb-0">$5,000</p>
-              </td>
-              <td>
-                <span class="text-xs font-weight-bold">done</span>
-              </td>
-              <td class="align-middle text-center">
-                <div class="d-flex align-items-center justify-content-center">
-                  <span class="me-2 text-xs font-weight-bold">100%</span>
-                  <div>
-                    <soft-progress
-                      color="success"
-                      variant="gradient"
-                      :percentage="100"
-                    />
-                  </div>
-                </div>
-              </td>
-              <td class="align-middle">
-                <button
-                  class="btn btn-link text-secondary mb-0"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <i class="fa fa-ellipsis-v text-xs" aria-hidden="true"></i>
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="d-flex px-2">
-                  <div>
-                    <img
-                      src="../../assets/img/small-logos/logo-jira.svg"
-                      class="avatar avatar-sm rounded-circle me-2"
-                      alt="jira"
-                    />
-                  </div>
-                  <div class="my-auto">
-                    <h6 class="mb-0 text-sm">Jira</h6>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <p class="text-sm font-weight-bold mb-0">$3,400</p>
-              </td>
-              <td>
-                <span class="text-xs font-weight-bold">canceled</span>
-              </td>
-              <td class="align-middle text-center">
-                <div class="d-flex align-items-center justify-content-center">
-                  <span class="me-2 text-xs font-weight-bold">30%</span>
-                  <div>
-                    <soft-progress
-                      color="danger"
-                      variant="gradient"
-                      :percentage="30"
-                    />
-                  </div>
-                </div>
-              </td>
-              <td class="align-middle">
-                <button
-                  class="btn btn-link text-secondary mb-0"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <i class="fa fa-ellipsis-v text-xs" aria-hidden="true"></i>
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="d-flex px-2">
-                  <div>
-                    <img
-                      src="../../assets/img/small-logos/logo-slack.svg"
-                      class="avatar avatar-sm rounded-circle me-2"
-                      alt="slack"
-                    />
-                  </div>
-                  <div class="my-auto">
-                    <h6 class="mb-0 text-sm">Slack</h6>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <p class="text-sm font-weight-bold mb-0">$1,000</p>
-              </td>
-              <td>
-                <span class="text-xs font-weight-bold">canceled</span>
-              </td>
-              <td class="align-middle text-center">
-                <div class="d-flex align-items-center justify-content-center">
-                  <span class="me-2 text-xs font-weight-bold">0%</span>
-                  <div>
-                    <soft-progress
-                      color="success"
-                      variant="gradient"
-                      :percentage="0"
-                    />
-                  </div>
-                </div>
-              </td>
-              <td class="align-middle">
-                <button
-                  class="btn btn-link text-secondary mb-0"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <i class="fa fa-ellipsis-v text-xs" aria-hidden="true"></i>
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="d-flex px-2">
-                  <div>
-                    <img
-                      src="../../assets/img/small-logos/logo-invision.svg"
-                      class="avatar avatar-sm rounded-circle me-2"
-                      alt="webdev"
-                    />
-                  </div>
-                  <div class="my-auto">
-                    <h6 class="mb-0 text-sm">Webdev</h6>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <p class="text-sm font-weight-bold mb-0">$14,000</p>
-              </td>
-              <td>
-                <span class="text-xs font-weight-bold">working</span>
-              </td>
-              <td class="align-middle text-center">
-                <div class="d-flex align-items-center justify-content-center">
-                  <span class="me-2 text-xs font-weight-bold">80%</span>
-                  <div>
-                    <soft-progress
-                      color="info"
-                      variant="gradient"
-                      :percentage="80"
-                    />
-                  </div>
-                </div>
-              </td>
-              <td class="align-middle">
-                <button
-                  class="btn btn-link text-secondary mb-0"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <i class="fa fa-ellipsis-v text-xs" aria-hidden="true"></i>
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="d-flex px-2">
-                  <div>
-                    <img
-                      src="../../assets/img/small-logos/logo-xd.svg"
-                      class="avatar avatar-sm rounded-circle me-2"
-                      alt="xd"
-                    />
-                  </div>
-                  <div class="my-auto">
-                    <h6 class="mb-0 text-sm">Adobe XD</h6>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <p class="text-sm font-weight-bold mb-0">$2,300</p>
-              </td>
-              <td>
-                <span class="text-xs font-weight-bold">done</span>
-              </td>
-              <td class="align-middle text-center">
-                <div class="d-flex align-items-center justify-content-center">
-                  <span class="me-2 text-xs font-weight-bold">100%</span>
-                  <div>
-                    <soft-progress
-                      color="success"
-                      variant="gradient"
-                      :percentage="100"
-                    />
-                  </div>
-                </div>
-              </td>
-              <td class="align-middle">
-                <button
-                  class="btn btn-link text-secondary mb-0"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <i class="fa fa-ellipsis-v text-xs" aria-hidden="true"></i>
-                </button>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
+    <!-- Pagination -->
+    <div class="d-flex justify-content-end my-3">
+      <a-pagination v-model="currentPage" :total="totalItems" :show-less-items="true" :show-quick-jumper="false"
+        :show-size-changer="false" @change="handlePageChange" />
+    </div>
   </div>
 </template>
 
 <script>
-import SoftProgress from "@/components/SoftProgress";
+
+import {
+  Pagination as AntPagination,
+  Button
+} from "ant-design-vue";
+import axios from "axios";
+import dayjs from "dayjs";
+import { port } from "../../store/env";
+import { formatCurrency } from "../../utils/helper";
 
 export default {
   name: "projects-table",
   components: {
-    SoftProgress,
+    "a-pagination": AntPagination,
+    "a-button": Button
   },
+  data() {
+    return {
+      currentPage: 1,
+      itemsPerPage: 10,
+      vouchers: []
+    }
+  },
+  computed: {
+    paginatedVoucher() {
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
+      return this.vouchers.slice(startIndex, endIndex);
+    },
+    totalItems() {
+      return this.vouchers.length;
+    },
+  },
+  mounted() {
+    this.fetchVouchers();
+  },
+  methods: {
+    handlePageChange(newPage) {
+      this.currentPage = newPage;
+    },
+    async fetchVouchers() {
+      return await axios
+        .get(`${port}/api/voucher-session`)
+        .then((response) => {
+          this.vouchers = response?.data?.map((item) => {
+            return {
+              name: item.name,
+              code: item.code,
+              duration: `${dayjs(item.startDate).format("DD/MM/YYYY")} - ${dayjs(item.endDate).format("DD/MM/YYYY")}`,
+              minValue: formatCurrency(item.minValue),
+              discountAmount: formatCurrency(item.discountAmount),
+              discountPercentage: item.discountPercentage + "%",
+              voucherTypeDescription: item.voucherType == 1 ? "Giảm theo phần trăm" : "Giảm theo tiền",
+              voucherType: item.voucherType
+            };
+          });
+        })
+        .catch((error) => {
+          console.error("Error fetching listings:", error);
+        });
+    },
+  }
+
 };
 </script>
