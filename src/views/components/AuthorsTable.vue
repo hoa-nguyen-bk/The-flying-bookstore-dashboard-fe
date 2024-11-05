@@ -8,54 +8,34 @@
         <table class="table align-items-center mb-0">
           <thead>
             <tr>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center"
-              >
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center">
                 Id
               </th>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center"
-              >
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center">
                 Tiêu đề
               </th>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center"
-              >
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center">
                 Chủ sách
               </th>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center"
-              >
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center">
                 Người thuê
               </th>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center"
-              >
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center">
                 Khoảng thời gian
               </th>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center"
-              >
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center">
                 Phương thức
               </th>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center"
-              >
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center">
                 Tiền cọc
               </th>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center"
-              >
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center">
                 Tiền thuê
               </th>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center"
-              >
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center">
                 Tiền trả cho khách
               </th>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center"
-              >
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center">
                 Trạng thái
               </th>
             </tr>
@@ -105,14 +85,18 @@
               </td>
               <td class="align-middle text-center">
                 <p class="text-xs font-weight-bold mb-0">
-                  {{ listing.status  }}  {{  listing.lateFee }}
+                  {{ listing.status }} {{ listing.lateFee }}
                 </p>
-                <a-button class="mt-2" v-if="listing.status == listStatus[`ORDERED_PAYMENT_PENDING`]" @click="handleMenuClick(listing.id,`PAYMENT_SUCCESS`)">Người thuê đã trả tiền</a-button> 
-                <a-button class="mt-2" v-else-if="listing.status == listStatus[`USER_PAID`]" @click="handleMenuClick(listing.id,`PAYMENT_SUCCESS`)">Người thuê đã trả tiền</a-button> 
-                <a-button class="mt-2" v-else-if="listing.status == listStatus[`RETURNED`]" @click="handleMenuClick(listing.id,`DEPOSIT_RETURNED`)">
+                <a-button class="mt-2" v-if="listing.status == listStatus[`ORDERED_PAYMENT_PENDING`]"
+                  @click="handleMenuClick(listing.id, `PAYMENT_SUCCESS`)">Người thuê đã trả tiền</a-button>
+                <a-button class="mt-2" v-else-if="listing.status == listStatus[`USER_PAID`]"
+                  @click="handleMenuClick(listing.id, `PAYMENT_SUCCESS`)">Người thuê đã trả tiền</a-button>
+                <a-button class="mt-2" v-else-if="listing.status == listStatus[`RETURNED`]"
+                  @click="handleMenuClick(listing.id, `DEPOSIT_RETURNED`)">
                   Đã trả cọc cho người thuê
-                </a-button> 
-                <a-button class="mt-2" v-else-if="listing.status == listStatus[`DEPOSIT_RETURNED`]" @click="handleMenuClick(listing.id,`PAID_OWNER`)">Đã trả cọc cho chủ sách</a-button>
+                </a-button>
+                <a-button class="mt-2" v-else-if="listing.status == listStatus[`DEPOSIT_RETURNED`]"
+                  @click="handleMenuClick(listing.id, `PAID_OWNER`)">Đã trả cọc cho chủ sách</a-button>
               </td>
             </tr>
           </tbody>
@@ -121,14 +105,8 @@
     </div>
     <!-- Pagination -->
     <div class="d-flex justify-content-end my-3">
-      <a-pagination
-        v-model="currentPage"
-        :total="totalItems"
-        :show-less-items="true"
-        :show-quick-jumper="false"
-        :show-size-changer="false"
-        @change="handlePageChange"
-      />
+      <a-pagination v-model="currentPage" :total="totalItems" :show-less-items="true" :show-quick-jumper="false"
+        :show-size-changer="false" @change="handlePageChange" />
     </div>
   </div>
 </template>
@@ -140,7 +118,7 @@ import {
 } from "ant-design-vue";
 import axios from "axios";
 import dayjs from "dayjs";
-import {port} from "./../../store/env"
+import { port } from "./../../store/env"
 
 export default {
   name: "listing-table",
@@ -193,7 +171,7 @@ export default {
       const formattedAmount = amount
         .toString()
         .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-  
+
       // Thêm ký tự đơn vị tiền tệ (VND)
       return formattedAmount + "đ";
     },
@@ -202,7 +180,7 @@ export default {
         .get(`${port}/api/leaseOrder/admin`)
         .then((response) => {
           this.listings = response?.data?.content.map((item) => {
-            const { lessee, listing, leaseOrder, lessor,totalPenaltyFee } = item;
+            const { lessee, listing, leaseOrder, lessor, totalPenaltyFee } = item;
             return {
               id: leaseOrder.id,
               title: listing.book.title,
@@ -215,7 +193,7 @@ export default {
               total: this.formatCurrency(leaseOrder.totalDeposit),
               status: this.listStatus[leaseOrder.status],
               returnFee: this.formatCurrency(leaseOrder.totalDeposit - leaseOrder.totalLeaseFee),
-              lateFee: totalPenaltyFee != 0? ", phí phạt là " + this.formatCurrency(totalPenaltyFee) :"",
+              lateFee: totalPenaltyFee != 0 ? ", phí phạt là " + this.formatCurrency(totalPenaltyFee) : "",
             };
           });
         })
@@ -226,19 +204,19 @@ export default {
     handlePageChange(newPage) {
       this.currentPage = newPage;
     },
-    async handleMenuClick (id,status) {
+    async handleMenuClick(id, status) {
       const token = JSON.parse(localStorage.getItem("token"));
       const config = {
-          url: `${port}/api/leaseOrder/edit/status`,
-          params: { id, status },
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      console.log({config});
+        url: `${port}/api/leaseOrder/edit/status`,
+        params: { id, status },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
       return await axios
         .request(config)
-        .then(async (response) => {
+        .then( async (response) => {
+          if (!response.data) return;
           console.log((response.data));
           return await this.fetchListings()
         })
