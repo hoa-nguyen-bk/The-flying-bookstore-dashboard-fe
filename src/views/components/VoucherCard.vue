@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-header pb-0 px-3">
-      <h6 class="mb-0">Tạo voucher mới</h6>
+      <h6 class="mb-0"> {{ $route.params.id ? "Sửa voucher id #" + $route.params.id : "Tạo voucher mới" }}</h6>
     </div>
     <div class="card-body pt-4 p-3">
       <div class="text-start">
@@ -63,7 +63,8 @@
 
           <!-- Nút submit -->
           <div class="text-center">
-            <soft-button class="my-4 mb-2" variant="gradient" color="success" full-width type="submit" @click="createVoucher">
+            <soft-button class="my-4 mb-2" variant="gradient" color="success" full-width type="submit"
+              @click="submitHandler">
               Xác nhận
             </soft-button>
           </div>
@@ -101,10 +102,53 @@ export default {
       }
     };
   },
+  mounted() {
+    this.fetchVoucherDetail();
+  },
   methods: {
-    async createVoucher() {
-      console.log("createVoucher");
-      
+    async fetchVoucherDetail() {
+      const voucherId = this.$route?.params?.id;
+      if (!voucherId) return;
+      try {
+        const response = await axios.get(
+          `${port}/api/voucher-session/${voucherId}`,
+          {
+            headers: { 'Content-Type': 'application/json' },
+            maxBodyLength: Infinity,
+          }
+        );
+        if (response.status == 200) {
+          const { code, discountAmount,
+            discountPercentage,
+            endDate,
+            id,
+            minValue,
+            name,
+            startDate,
+            voucherType } = response.data;
+          this.voucherSession = {
+            code,
+            discountAmount,
+            discountPercentage,
+            endDate,
+            id,
+            minValue,
+            name,
+            startDate,
+            voucherType
+          }
+        }
+      } catch (error) {
+        console.error(error);
+        message.error("Lấy thông tin voucher không thành công");
+      }
+    },
+
+    async submitHandler() {
+      console.log("submitHandler");
+      if (this.$route?.params?.id) {
+        return await this.updateVoucher();
+      }
       try {
         const data = {
           name: this.voucherSession.name,
@@ -126,8 +170,6 @@ export default {
           }
         );
 
-        console.log({ response });
-
         if (response.status === 200) {
           message.success("Tạo voucher thành công");
           this.$router.push('/manager-voucher');
@@ -140,7 +182,41 @@ export default {
         message.error("Tạo voucher không thành công");
       }
     },
-   
+    async updateVoucher() {
+      try {
+        const voucherId = this.$route?.params?.id;
+        const data = {
+          name: this.voucherSession.name,
+          startDate: this.voucherSession.startDate,
+          endDate: this.voucherSession.endDate,
+          minValue: this.voucherSession.minValue,
+          discountAmount: this.voucherSession.discountAmount,
+          discountPercentage: this.voucherSession.discountPercentage,
+          voucherType: this.voucherSession.voucherType,
+          code: this.voucherSession.code,
+        };
+
+        const response = await axios.put(
+          `${port}/api/voucher-session/${voucherId}`,
+          data,
+          {
+            headers: { 'Content-Type': 'application/json' },
+            maxBodyLength: Infinity,
+          }
+        );
+
+        if (response.status === 200) {
+          message.success("Cập nhập voucher thành công");
+          this.$router.push('/manager-voucher');
+        } else {
+          console.log(response);
+          message.error("Cập nhập voucher không thành công");
+        }
+      } catch (error) {
+        console.error(error);
+        message.error("Cập nhập voucher không thành công");
+      }
+    },
 
   }
 
