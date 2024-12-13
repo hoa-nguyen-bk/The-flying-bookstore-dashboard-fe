@@ -118,7 +118,7 @@ import {
 } from "ant-design-vue";
 import axios from "axios";
 import dayjs from "dayjs";
-import { port } from "./../../store/env"
+import { headerAxios, port } from "./../../store/env"
 
 export default {
   name: "listing-table",
@@ -177,7 +177,10 @@ export default {
     },
     async fetchListings() {
       return await axios
-        .get(`${port}/api/leaseOrder/admin`)
+        .get(`${port}/api/leaseOrder/admin`,
+          {
+            headers: headerAxios
+          })
         .then((response) => {
           this.listings = response?.data?.content.map((item) => {
             const { lessee, listing, leaseOrder, lessor, totalPenaltyFee } = item;
@@ -210,6 +213,7 @@ export default {
         url: `${port}/api/leaseOrder/edit/status`,
         params: { id, status },
         headers: {
+          ...headerAxios,
           Authorization: `Bearer ${token}`,
         },
       }

@@ -79,7 +79,7 @@
 import SoftButton from "@/components/SoftButton.vue";
 import { message } from 'ant-design-vue';
 import axios from "axios";
-import { port } from "../../store/env";
+import { headerAxios, port } from "../../store/env";
 
 
 export default {
@@ -113,7 +113,7 @@ export default {
         const response = await axios.get(
           `${port}/api/voucher-session/${voucherId}`,
           {
-            headers: { 'Content-Type': 'application/json' },
+            headers: { ...headerAxios, 'Content-Type': 'application/json' },
             maxBodyLength: Infinity,
           }
         );
@@ -165,7 +165,7 @@ export default {
           `${port}/api/voucher-session`,
           data,
           {
-            headers: { 'Content-Type': 'application/json' },
+            headers: {...headerAxios,  'Content-Type': 'application/json' },
             maxBodyLength: Infinity,
           }
         );
@@ -200,7 +200,7 @@ export default {
           `${port}/api/voucher-session/${voucherId}`,
           data,
           {
-            headers: { 'Content-Type': 'application/json' },
+            headers: { ...headerAxios, 'Content-Type': 'application/json' },
             maxBodyLength: Infinity,
           }
         );

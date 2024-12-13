@@ -19,7 +19,7 @@
               </th>
               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center">
                 Người mua
-              </th>
+              </th> 
               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center">
                 Ngày đặt
               </th>
@@ -103,7 +103,7 @@ import {
 } from "ant-design-vue";
 import axios from "axios";
 import dayjs from "dayjs";
-import {port} from "./../../store/env"
+import {headerAxios, port} from "./../../store/env"
 
 export default {
   name: "buy-order-table",
@@ -157,7 +157,10 @@ export default {
     },
     async fetchListings() {
       return await axios
-        .get(`${port}/api/leaseOrder/admin`)
+        .get(`${port}/api/SaleOrder`,
+          {
+            headers: headerAxios
+          })
         .then((response) => {
           this.listings = response?.data?.content.map((item) => {
             const { lessee, listing, leaseOrder, lessor } = item;
@@ -186,13 +189,13 @@ export default {
     async handleMenuClick(id, status) {
       const token = JSON.parse(localStorage.getItem("token"));
       const config = {
-        url: `${port}/api/leaseOrder/edit/status`,
+        url: `${port}/api/SaleOrder/status`,
         params: { id, status },
         headers: {
+          ...headerAxios,
           Authorization: `Bearer ${token}`,
         },
       }
-      console.log({ config });
       return await axios
         .request(config)
         .then(async (response) => {
