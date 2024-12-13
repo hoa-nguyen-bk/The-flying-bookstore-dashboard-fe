@@ -63,9 +63,11 @@
                     href="javascript:;">
                     <i class="far fa-trash-alt me-2" aria-hidden="true"></i>Xóa
                   </a>
-                  <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;">
+
+                  <a class="btn btn-link text-dark px-3 mb-0" @click="navigateToEdit(voucher.id)" href="javascript:;">
                     <i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Sửa
                   </a>
+
                 </div>
               </td>
             </tr>
@@ -90,7 +92,7 @@ import {
 } from "ant-design-vue";
 import axios from "axios";
 import dayjs from "dayjs";
-import { port } from "../../store/env";
+import { headerAxios, port } from "../../store/env";
 import { formatCurrency } from "../../utils/helper";
 
 export default {
@@ -123,10 +125,14 @@ export default {
     handlePageChange(newPage) {
       this.currentPage = newPage;
     },
+    navigateToEdit(id) {
+      this.$router.push('/edit-voucher/' + id);
+    },
     async deleteVoucher(voucherId) {
       try {
         const response = await axios.delete(`${port}/api/voucher-session/${voucherId}`, {
           maxBodyLength: Infinity,
+          headers: headerAxios
         });
         if (response.status == 204) {
           message.success("Xóa voucher thành công");
@@ -142,11 +148,14 @@ export default {
 
     async fetchVouchers() {
       return await axios
-        .get(`${port}/api/voucher-session`)
+        .get(`${port}/api/voucher-session`,
+          {
+            headers: headerAxios
+          })
         .then((response) => {
           this.vouchers = response?.data?.map((item) => {
             return {
-              id:item.id,
+              id: item.id,
               name: item.name,
               code: item.code,
               duration: `${dayjs(item.startDate).format("DD/MM/YYYY")} - ${dayjs(item.endDate).format("DD/MM/YYYY")}`,

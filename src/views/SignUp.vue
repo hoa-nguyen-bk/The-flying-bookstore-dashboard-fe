@@ -72,7 +72,7 @@ import SoftButton from "@/components/SoftButton.vue";
 import axios from "axios";
 import { message } from "ant-design-vue";
 import { mapMutations } from "vuex";
-import { port } from "../store/env";
+import { headerAxios, port } from "../store/env";
 
 export default {
   name: "SignupBasic",
@@ -143,6 +143,9 @@ export default {
             lastName: "",
             phoneNumber: "",
             birthDate: "",
+          },
+          {
+            headers: headerAxios
           }
         );
         console.log({ response });

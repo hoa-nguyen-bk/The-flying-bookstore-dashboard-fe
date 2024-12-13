@@ -72,15 +72,15 @@ const body = document.getElementsByTagName("body")[0];
 import { mapMutations } from "vuex";
 import axios from "axios";
 import { message } from 'ant-design-vue';
-import {port} from "./../store/env"
+import { headerAxios, port } from "./../store/env"
 
 
 export default {
   name: "SignIn",
-  data(){
+  data() {
     return {
-      username:'',
-      password:''
+      username: '',
+      password: ''
     }
   },
   components: {
@@ -109,6 +109,9 @@ export default {
             "loginName": this.username,
             "password": this.password
           },
+          {
+            headers: headerAxios
+          }
         );
         console.log({ response });
         if (response.status == 200) {

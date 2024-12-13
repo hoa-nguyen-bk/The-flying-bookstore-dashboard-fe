@@ -48,6 +48,11 @@ const routes = [
     component: CreateVoucher,
   },
   {
+    path: "/edit-voucher/:id",
+    name: "Edit Voucher",
+    component: CreateVoucher,
+  },
+  {
     path: "/virtual-reality",
     name: "Virtual Reality",
     component: VirtualReality,
