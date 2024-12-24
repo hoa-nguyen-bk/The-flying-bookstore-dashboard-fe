@@ -121,7 +121,7 @@ export default {
         ORDERED_PAYMENT_PENDING: "1. Chờ người mua thanh toán",
         PAYMENT_SUCCESS: "2. Đã thanh toán",
         DELIVERED: "3. Người mua đã nhận sách",
-        PAID_BUYER: "4. Đã trả tiền thừa cho người mua",
+        PAID_BUYER: "4. Đã trả tiền cho người bán",
         PAID_SELLER: "4. Đã trả tiền cho người bán",
         CANCELED: "5. Người mua đã hủy",
       },
