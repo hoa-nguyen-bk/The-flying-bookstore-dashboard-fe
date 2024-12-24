@@ -5,34 +5,31 @@
     </div>
     <div class="card-body px-0 pt-0 pb-2">
       <div class="table-responsive p-0">
-        <table class="table align-items-center mb-0">
+        <table class="table align-items-center justify-content-center mb-0">
           <thead>
             <tr>
               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center">
                 Id
               </th>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center">
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center ps-2">
                 Tiêu đề
               </th>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center">
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center ps-2">
                 Người bán
               </th>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center">
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center ps-2">
                 Người mua
               </th> 
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center">
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center ps-2">
                 Ngày đặt
               </th>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center">
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center ps-2">
                 Phương thức
               </th>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center">
-                Giá bán
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center ps-2">
+                Tổng tiền
               </th>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center">
-                Tiền trả cho người bán
-              </th>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7  text-center">
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center ps-2">
                 Trạng thái
               </th>
             </tr>
@@ -40,24 +37,24 @@
           <tbody>
             <tr v-for="(listing, index) in paginatedListings" :key="index">
               <td class="align-middle text-center">
-                <p class="text-xs font-weight-bold mb-0">{{ listing.id }}</p>
+                <p class="text-xs font-weight-light mb-0">{{ listing.id }}</p>
               </td>
               <td class="align-middle text-center">
-                <p class="text-xs font-weight-bold mb-0">{{ listing.title }}</p>
+                <h6 class="text-sm mb-0">{{ listing.title }}</h6>
               </td>
               <td class="align-middle text-center">
-                <p class="text-xs font-weight-bold mb-0">
-                  {{ listing.leeseName }}
+                <p class="text-sm font-weight-bold  mb-0">
+                  {{ listing.salerName }}
+                </p>
+              </td>
+              <td class="align-middle text-center">
+                <p class="text-sm font-weight-bold  mb-0">
+                  {{ listing.buyerName }}
                 </p>
               </td>
               <td class="align-middle text-center">
                 <p class="text-xs font-weight-bold mb-0">
-                  {{ listing.leesorName }}
-                </p>
-              </td>
-              <td class="align-middle text-center">
-                <p class="text-xs font-weight-bold mb-0">
-                  {{ listing.duration }}
+                  {{ listing.orderDate }}
                 </p>
               </td>
               <td class="align-middle text-center">
@@ -66,21 +63,24 @@
                 </p>
               </td>
               <td class="align-middle text-center">
-                <p class="text-xs font-weight-bold mb-0">
-                  {{ listing.depositFee }}
+                <p class="text-xs font-weight-semibold mb-0">
+                  {{ listing.price }}
                 </p>
               </td>
               <td class="align-middle text-center">
-                <p class="text-xs font-weight-bold mb-0">
-                  {{ listing.leaseFee }}
+                <p class="text-xs font-weight-semibold mb-0">
+                  {{ listing.total }}
                 </p>
               </td>
+
               <td class="align-middle text-center">
                 <p class="text-xs font-weight-bold mb-0">
                   {{ listing.status }} 
                 </p>
                 <a-button class="mt-2" v-if="listing.status == listStatus[`ORDERED_PAYMENT_PENDING`]"
                   @click="handleMenuClick(listing.id, `PAYMENT_SUCCESS`)">Người mua đã trả tiền</a-button>
+                <a-button class="mt-2" v-if="listing.status == listStatus[`DELIVERED`]"
+                  @click="handleMenuClick(listing.id, `PAID_SELLER`)">Đã trả tiền người bán</a-button>
               </td>
 
             </tr>
@@ -120,8 +120,9 @@ export default {
       listStatus: {
         ORDERED_PAYMENT_PENDING: "1. Chờ người mua thanh toán",
         PAYMENT_SUCCESS: "2. Đã thanh toán",
-        DELIVERED: "3. Người bán đã giao sách",
-        PAID_OWNER: "4. Đã trả tiền cho người bán",
+        DELIVERED: "3. Người mua đã nhận sách",
+        PAID_BUYER: "4. Đã trả tiền thừa cho người mua",
+        PAID_SELLER: "4. Đã trả tiền cho người bán",
         CANCELED: "5. Người mua đã hủy",
       },
       listPaymentMethod: {
@@ -162,20 +163,18 @@ export default {
             headers: headerAxios
           })
         .then((response) => {
-          this.listings = response?.data?.content.map((item) => {
-            const { lessee, listing, leaseOrder, lessor } = item;
+          this.listings = response?.data?.map((item) => {
+            const { Seller, listing, saleOrder, Buyer } = item;
             return {
-              id: leaseOrder.id,
+              id: saleOrder.id,
               title: listing.book.title,
-              leeseName: `${lessee.firstName} ${lessee.lastName}`,
-              leesorName: `${lessor.firstName} ${lessor.lastName}`,
-              duration: `${dayjs(leaseOrder.toDate).format("DD/MM/YYYY")}`,
-              method: this.listPaymentMethod[leaseOrder.paymentMethod],
-              depositFee: this.formatCurrency(leaseOrder.totalDeposit),
-              leaseFee: this.formatCurrency(leaseOrder.totalLeaseFee),
-              total: this.formatCurrency(leaseOrder.totalDeposit),
-              status: this.listStatus[leaseOrder.status],
-              returnFee: this.formatCurrency(leaseOrder.totalDeposit - leaseOrder.totalLeaseFee),
+              salerName: `${Seller.firstName} ${Seller.lastName}`,
+              buyerName: `${Buyer.firstName} ${Buyer.lastName}`,
+              orderDate: `${dayjs(saleOrder.createdDate).format("DD/MM/YYYY")}`,
+              method: this.listPaymentMethod[saleOrder.paymentMethod],
+              price: this.formatCurrency(listing.price),
+              total: this.formatCurrency(saleOrder.totalPrice),
+              status: this.listStatus[saleOrder.status],
             };
           });
         })
